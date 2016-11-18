@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "bootstrapper.js",
   "license": "MIT",
-  "repository": "jullinator/editron-babel",
+  "repository": "jullinator/quark",
   "scripts": {
     "start": "electron ."
   },
