@@ -1,16 +1,9 @@
 import { app, BrowserWindow, ipcMain} from 'electron';
-import HelloWorld from './hello-world/server'
-
-ipcMain.on('test', (event, payload)=>{
-  console.log(payload)
-  let window = HelloWorld()
-})
-
-
-
+import MainWindow from './main-window'
 
 app.on('ready', () => {
-  let window = HelloWorld()
+  let window = MainWindow()
+  let window2 = MainWindow()
 });
 
 
