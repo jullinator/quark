@@ -40,7 +40,7 @@ view.top = (
 
 /* DB INIT*/
 Fire.Tables('components/editor',{
-  name:'unique-id',
+  name:'name',
   mode:'javascript',
   theme:'github',
   value:''
@@ -70,8 +70,14 @@ editorStore.ref.child('test1').on('value',res=>{
 /*DB METHODS, listen to APP*/
 
 /* APP LISTENER, AND SOME ROUTING EVENTS AND METHODS */
+
+
 app.on('editor/value', ({props, value})=>{
   props.value = value
+  editorStore.ref.child(props._id).set(props)
+})
+app.on('editor/name', ({props, name})=>{
+  props.name = name
   editorStore.ref.child(props._id).set(props)
 })
 
@@ -82,20 +88,22 @@ app.on('editor/value', ({props, value})=>{
 /*  RENDER Editor */
 app.on('render/editor', (props)=>{
 
-  const updateValue = (value) => app.emit('editor/value', {
-    value,
-    props
-  })
+  const changeValue = (value) => app.emit('editor/value', {    value,    props  })
+  const changeName = (e) => app.emit('editor/name', { name: e.target.value, props })
 
   view.content = (
     <div>
-    <AceEditor
-            onChange={updateValue}
-            value = {props.value}
-            mode = {props.mode}
-            theme = {props.theme}
-            name = {props._id}
-            />
+      <input
+        value={props.name}
+        onChange={changeName}
+        />
+      <AceEditor
+              onChange={changeValue}
+              value = {props.value}
+              mode = {props.mode}
+              theme = {props.theme}
+              name = {props._id}
+              />
 
     </div>
   )
